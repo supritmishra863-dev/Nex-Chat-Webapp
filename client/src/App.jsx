@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { io } from "socket.io-client"
 import nexchatLogo from "./assets/nexchat-logo.png"
 
-const socket = io("http://localhost:5000")
+const socket = io("https://nexchat-backend-n6mn.onrender.com")
 
 function App() {
   const [isSignup, setIsSignup] = useState(true)
@@ -128,7 +128,7 @@ function App() {
   const getProfileImageUrl = (value) => {
     if (!value) return ""
     if (value.startsWith("http://") || value.startsWith("https://")) return value
-    return `http://localhost:5000${value}`
+    return `https://nexchat-backend-n6mn.onrender.com${value}`
   }
 
   const refreshUsers = async () => {
@@ -136,7 +136,7 @@ function App() {
     if (!token) return
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/conversations", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/users/conversations", {
         headers: { Authorization: `Bearer ${token}` },
       })
       const data = await response.json()
@@ -152,7 +152,7 @@ function App() {
     if (!token) return
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/me", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
       const data = await response.json()
@@ -184,7 +184,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/chat-lock/status",
+        "https://nexchat-backend-n6mn.onrender.com/api/users/chat-lock/status",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -230,7 +230,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/${loggedInUser.id}/${user._id}`,
+        `https://nexchat-backend-n6mn.onrender.com/api/messages/${loggedInUser.id}/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -311,7 +311,7 @@ function App() {
           unreadIncomingMessages.map(async (msg) => {
             try {
               const statusResponse = await fetch(
-                `http://localhost:5000/api/messages/${msg._id}/status`,
+                `https://nexchat-backend-n6mn.onrender.com/api/messages/${msg._id}/status`,
                 {
                   method: "PATCH",
                   headers: {
@@ -408,7 +408,7 @@ function App() {
       setChatLockLoading(true)
 
       const response = await fetch(
-        `http://localhost:5000/api/users/chat-lock/${selectedChat.id}/lock`,
+        `https://nexchat-backend-n6mn.onrender.com/api/users/chat-lock/${selectedChat.id}/lock`,
         {
           method: "POST",
           headers: {
@@ -451,7 +451,7 @@ function App() {
       setChatLockError("")
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/forgot-password",
+        "https://nexchat-backend-n6mn.onrender.com/api/auth/forgot-password",
         {
           method: "POST",
           headers: {
@@ -498,7 +498,7 @@ function App() {
       setChatLockError("")
 
       const response = await fetch(
-        "http://localhost:5000/api/auth/verify-reset-otp",
+        "https://nexchat-backend-n6mn.onrender.com/api/auth/verify-reset-otp",
         {
           method: "POST",
           headers: {
@@ -545,7 +545,7 @@ function App() {
       setChatLockError("")
 
       const response = await fetch(
-        "http://localhost:5000/api/users/chat-lock/reset-pin",
+        "https://nexchat-backend-n6mn.onrender.com/api/users/chat-lock/reset-pin",
         {
           method: "POST",
           headers: {
@@ -604,7 +604,7 @@ function App() {
 
       if (chatLockMode === "setup") {
         const pinResponse = await fetch(
-          "http://localhost:5000/api/users/chat-lock/set-pin",
+          "https://nexchat-backend-n6mn.onrender.com/api/users/chat-lock/set-pin",
           {
             method: "POST",
             headers: {
@@ -622,7 +622,7 @@ function App() {
         }
 
         const lockResponse = await fetch(
-          `http://localhost:5000/api/users/chat-lock/${chatLockTarget._id}/lock`,
+          `https://nexchat-backend-n6mn.onrender.com/api/users/chat-lock/${chatLockTarget._id}/lock`,
           {
             method: "POST",
             headers: {
@@ -652,7 +652,7 @@ function App() {
 
       if (chatLockMode === "open") {
         const response = await fetch(
-          "http://localhost:5000/api/users/chat-lock/verify",
+          "https://nexchat-backend-n6mn.onrender.com/api/users/chat-lock/verify",
           {
             method: "POST",
             headers: {
@@ -680,7 +680,7 @@ function App() {
 
       if (chatLockMode === "remove") {
         const response = await fetch(
-          `http://localhost:5000/api/users/chat-lock/${chatLockTarget._id}/unlock`,
+          `https://nexchat-backend-n6mn.onrender.com/api/users/chat-lock/${chatLockTarget._id}/unlock`,
           {
             method: "POST",
             headers: {
@@ -743,7 +743,7 @@ function App() {
       formData.append("about", profileAbout.trim())
       if (profileFile) formData.append("profileImage", profileFile)
 
-      const response = await fetch("http://localhost:5000/api/users/profile", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/users/profile", {
         method: "PATCH",
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
         body: formData,
@@ -773,7 +773,7 @@ function App() {
     if (!token) return
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/friend-requests", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/users/friend-requests", {
         headers: { Authorization: `Bearer ${token}` },
       })
       const data = await response.json()
@@ -792,7 +792,7 @@ function App() {
       setFriendActionLoading(true)
       setFriendSearchResult(null)
       setFriendSearchStatus("Searching...")
-      const response = await fetch(`http://localhost:5000/api/users/search/${encodeURIComponent(lookup)}`, {
+      const response = await fetch(`https://nexchat-backend-n6mn.onrender.com/api/users/search/${encodeURIComponent(lookup)}`, {
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
       })
       const data = await response.json()
@@ -810,7 +810,7 @@ function App() {
     if (!userId || friendActionLoading) return
     try {
       setFriendActionLoading(true)
-      const response = await fetch(`http://localhost:5000/api/users/friend-request/${userId}`, {
+      const response = await fetch(`https://nexchat-backend-n6mn.onrender.com/api/users/friend-request/${userId}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
       })
@@ -836,7 +836,7 @@ function App() {
     if (!userId || friendActionLoading) return
     try {
       setFriendActionLoading(true)
-      const response = await fetch(`http://localhost:5000/api/users/friend-request/${userId}/${action}`, {
+      const response = await fetch(`https://nexchat-backend-n6mn.onrender.com/api/users/friend-request/${userId}/${action}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
       })
@@ -865,7 +865,7 @@ function App() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/users/friends/${userId}/remove`, {
+      const response = await fetch(`https://nexchat-backend-n6mn.onrender.com/api/users/friends/${userId}/remove`, {
         method: "POST",
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
       })
@@ -887,7 +887,7 @@ function App() {
 
   const toggleBlock = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${userId}/block`, {
+      const response = await fetch(`https://nexchat-backend-n6mn.onrender.com/api/users/${userId}/block`, {
         method: "POST",
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
       })
@@ -1088,7 +1088,7 @@ useEffect(() => {
     const handleDelivered = async (data) => {
       try {
         await fetch(
-          `http://localhost:5000/api/messages/${data.messageId}/status`,
+          `https://nexchat-backend-n6mn.onrender.com/api/messages/${data.messageId}/status`,
           {
             method: "PATCH",
             headers: {
@@ -1141,7 +1141,7 @@ useEffect(() => {
           await Promise.all(
             myUnreadMessages.map((msg) =>
               fetch(
-                `http://localhost:5000/api/messages/${msg.id}/status`,
+                `https://nexchat-backend-n6mn.onrender.com/api/messages/${msg.id}/status`,
                 {
                   method: "PATCH",
                   headers: {
@@ -1647,7 +1647,7 @@ useEffect(() => {
   const refreshCallHistory = async (userId = selectedChat?.id) => {
     if (!userId) return
     try {
-      const response = await fetch(`http://localhost:5000/api/calls/with/${userId}`, {
+      const response = await fetch(`https://nexchat-backend-n6mn.onrender.com/api/calls/with/${userId}`, {
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
       })
       const data = await response.json()
@@ -1659,7 +1659,7 @@ useEffect(() => {
     if (!callLogIdRef.current) return
     const id = callLogIdRef.current
     try {
-      await fetch(`http://localhost:5000/api/calls/${id}`, {
+      await fetch(`https://nexchat-backend-n6mn.onrender.com/api/calls/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${sessionStorage.getItem("token")}` },
         body: JSON.stringify({ status, duration }),
@@ -1699,7 +1699,7 @@ useEffect(() => {
 
       localStreamRef.current = stream
 
-      const callLogResponse = await fetch("http://localhost:5000/api/calls", {
+      const callLogResponse = await fetch("https://nexchat-backend-n6mn.onrender.com/api/calls", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${sessionStorage.getItem("token")}` },
         body: JSON.stringify({ receiver: selectedChat.id, type: callType }),
@@ -1989,7 +1989,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/signup",
+        "https://nexchat-backend-n6mn.onrender.com/api/auth/signup",
         {
           method: "POST",
           headers: {
@@ -2030,7 +2030,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+        "https://nexchat-backend-n6mn.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: {
@@ -2075,7 +2075,7 @@ useEffect(() => {
       setResetLoading(true)
       setResetMessage("")
 
-      const response = await fetch("http://localhost:5000/api/auth/forgot-password", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: resetEmail.trim() }),
@@ -2103,7 +2103,7 @@ useEffect(() => {
       setResetLoading(true)
       setResetMessage("")
 
-      const response = await fetch("http://localhost:5000/api/auth/verify-reset-otp", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/auth/verify-reset-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -2144,7 +2144,7 @@ useEffect(() => {
       setResetLoading(true)
       setResetMessage("")
 
-      const response = await fetch("http://localhost:5000/api/auth/reset-password", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -2202,7 +2202,7 @@ useEffect(() => {
     if (!attachment?.url) return ""
     return attachment.url.startsWith("http")
       ? attachment.url
-      : `http://localhost:5000${attachment.url}`
+      : `https://nexchat-backend-n6mn.onrender.com${attachment.url}`
   }
 
   const formatFileSize = (bytes = 0) => {
@@ -2300,7 +2300,7 @@ useEffect(() => {
         formData.append("file", selectedFile)
       }
 
-      const response = await fetch("http://localhost:5000/api/messages", {
+      const response = await fetch("https://nexchat-backend-n6mn.onrender.com/api/messages", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
@@ -2436,7 +2436,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/${selectedMessage.id}/reaction`,
+        `https://nexchat-backend-n6mn.onrender.com/api/messages/${selectedMessage.id}/reaction`,
         {
           method: "PATCH",
           headers: {
@@ -2488,7 +2488,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/${selectedMessage.id}/edit`,
+        `https://nexchat-backend-n6mn.onrender.com/api/messages/${selectedMessage.id}/edit`,
         {
           method: "PATCH",
           headers: {
@@ -2550,7 +2550,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/${selectedMessage.id}/forward`,
+        `https://nexchat-backend-n6mn.onrender.com/api/messages/${selectedMessage.id}/forward`,
         {
           method: "POST",
           headers: {
@@ -2636,7 +2636,7 @@ useEffect(() => {
   const handleBulkDeleteForMe = async () => {
     if (!selectedMessageIds.length) return
     const token = sessionStorage.getItem("token")
-    const results = await Promise.all(selectedMessageIds.map((id) => fetch(`http://localhost:5000/api/messages/${id}/delete-for-me`, { method: "PATCH", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify({ userId: loggedInUser.id }) })))
+    const results = await Promise.all(selectedMessageIds.map((id) => fetch(`https://nexchat-backend-n6mn.onrender.com/api/messages/${id}/delete-for-me`, { method: "PATCH", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify({ userId: loggedInUser.id }) })))
     const deletedIds = selectedMessageIds.filter((_, index) => results[index].ok)
     setSelectedChat((prev) => prev ? { ...prev, messages: prev.messages.filter((msg) => !deletedIds.includes(msg.id)) } : prev)
     clearDeleteSelection()
@@ -2668,7 +2668,7 @@ useEffect(() => {
       const results = await Promise.all(
         selectedMessageIds.map(async (id) => {
           const response = await fetch(
-            `http://localhost:5000/api/messages/${id}/delete-for-everyone`,
+            `https://nexchat-backend-n6mn.onrender.com/api/messages/${id}/delete-for-everyone`,
             {
               method: "PATCH",
               headers: {
@@ -2755,7 +2755,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/${selectedMessage.id}/delete-for-me`,
+        `https://nexchat-backend-n6mn.onrender.com/api/messages/${selectedMessage.id}/delete-for-me`,
         {
           method: "PATCH",
           headers: {
@@ -2796,7 +2796,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/${selectedMessage.id}/delete-for-everyone`,
+        `https://nexchat-backend-n6mn.onrender.com/api/messages/${selectedMessage.id}/delete-for-everyone`,
         {
           method: "PATCH",
           headers: {
